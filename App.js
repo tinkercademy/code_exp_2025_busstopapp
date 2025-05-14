@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ActivityIndicator
+} from "react-native";
 
 export default function App() {
-  const [busTime, setBusTime] = useState("Loading...");
+  const [busTime, setBusTime] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   // Simulate fetching bus arrival time
   const fetchBusTime = () => {
-    setBusTime("Loading...");
+    setLoading(true);
 
     // Simulating API call with a timeout
     setTimeout(() => {
@@ -27,7 +34,9 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Bus arrival time:</Text>
-        <Text style={styles.timeText}>{busTime}</Text>
+        <Text style={styles.timeText}>
+          {loading ? <ActivityIndicator size="large" /> : busTime}
+        </Text>
         <Pressable style={styles.refreshButton} onPress={fetchBusTime}>
           <Text style={styles.buttonText}>Refresh!</Text>
         </Pressable>
